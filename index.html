@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Git & GitHub - Guía Futurística</title>
+    <title>Git & GitHub - Guía Futurística Completa</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
         
@@ -30,7 +30,7 @@
             --shadow-cyan: rgba(0, 255, 255, 0.4);
             --shadow-purple: rgba(138, 43, 226, 0.3);
             --gradient-primary: linear-gradient(135deg, #00ffff, #8a2be2);
-            --gradient-secondary: linear-gradient(135deg, #ff00ff, #00d4ff);
+            --gradient-secondary: linear-gradient(135deg, #ff00ff, #6a0dad);
             --gradient-dark: linear-gradient(135deg, #001122, #0a0a0f);
         }
 
@@ -733,6 +733,39 @@
             text-shadow: 0 0 10px var(--neon-pink);
         }
 
+        .quick-reference {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .quick-reference h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .quick-reference table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+        }
+
+        .quick-reference th, .quick-reference td {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .quick-reference th {
+            background: var(--bg-darker);
+            color: var(--text-primary);
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 3rem;
@@ -753,6 +786,10 @@
             
             .advanced-concepts {
                 grid-template-columns: 1fr;
+            }
+
+            .quick-reference table {
+                font-size: 0.9rem;
             }
         }
 
@@ -792,7 +829,7 @@
                     ¿Qué es Git?
                 </h2>
                 <p class="concept-description">
-                    Git es un <span class="highlight">sistema de control de versiones distribuido</span> que permite rastrear cambios en archivos y coordinar el trabajo entre múltiples personas. Es como tener una máquina del tiempo para tu código, donde cada commit es un punto en el tiempo al que puedes volver.
+                    Git es un <span class="highlight">sistema de control de versiones distribuido</span> que permite rastrear cambios en archivos y coordinar el trabajo entre múltiples personas. Es como una máquina del tiempo para tu código, donde cada commit es un punto en el tiempo al que puedes volver.
                 </p>
                 <div class="code-block">
                     <pre><span class="terminal-prompt">user@matrix:~$</span> git --version
@@ -802,11 +839,46 @@
 
             <div class="concept-section">
                 <h2 class="concept-title">
+                    <div class="concept-icon">📚</div>
+                    Obtener Ayuda
+                </h2>
+                <p class="concept-description">
+                    Git ofrece herramientas integradas para obtener ayuda sobre sus comandos. Usa estos comandos para explorar la documentación oficial.
+                </p>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git help [comando]</code>
+                        </div>
+                        <div class="command-description">
+                            Muestra la documentación detallada de un comando específico.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git help commit
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git help --all</code>
+                        </div>
+                        <div class="command-description">
+                            Lista todos los comandos disponibles en Git.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git help --all
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-section">
+                <h2 class="concept-title">
                     <div class="concept-icon">⚙️</div>
                     Configuración Inicial
                 </h2>
                 <p class="concept-description">
-                    Antes de empezar a usar Git, necesitas configurar tu identidad. Esta información se incluirá en cada commit que hagas.
+                    Antes de usar Git, configura tu identidad y preferencias para personalizar tu experiencia.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -814,7 +886,7 @@
                             <code>git config --global user.name "Tu Nombre"</code>
                         </div>
                         <div class="command-description">
-                            Configura tu nombre de usuario globalmente. Este nombre aparecerá en todos tus commits.
+                            Configura tu nombre de usuario globalmente para los commits.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git config --global user.name "Alex Cyber"
@@ -826,7 +898,7 @@
                             <code>git config --global user.email "tu@email.com"</code>
                         </div>
                         <div class="command-description">
-                            Configura tu email. Es fundamental para la identificación en plataformas como GitHub.
+                            Configura tu email para la identificación en plataformas como GitHub.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git config --global user.email "alex@cyber.dev"
@@ -838,7 +910,19 @@
                             <code>git config --global init.defaultBranch main</code>
                         </div>
                         <div class="command-description">
-                            Establece "main" como rama por defecto en lugar de "master" (estándar moderno).
+                            Establece "main" como rama por defecto en lugar de "master".
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git config --global core.editor [editor]</code>
+                        </div>
+                        <div class="command-description">
+                            Configura tu editor preferido para mensajes de commit (e.g., VS Code, Vim).
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git config --global core.editor "code --wait"
                         </div>
                     </div>
 
@@ -847,7 +931,11 @@
                             <code>git config --list</code>
                         </div>
                         <div class="command-description">
-                            Muestra toda la configuración actual de Git en tu sistema.
+                            Muestra toda la configuración actual de Git.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git config --list<br>
+                            <span class="command-output">user.name=Alex Cyber<br>user.email=alex@cyber.dev</span>
                         </div>
                     </div>
                 </div>
@@ -858,13 +946,16 @@
                     <div class="concept-icon">🚀</div>
                     Comandos Fundamentales
                 </h2>
+                <p class="concept-description">
+                    Estos comandos son la base para trabajar con Git y gestionar cambios en tu proyecto.
+                </p>
                 <div class="commands-grid">
                     <div class="command-card">
                         <div class="command-syntax">
                             <code>git init</code>
                         </div>
                         <div class="command-description">
-                            Inicializa un nuevo repositorio Git en el directorio actual. Crea la carpeta oculta .git donde se almacena toda la información del repositorio.
+                            Inicializa un nuevo repositorio Git en el directorio actual.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> mkdir mi-proyecto && cd mi-proyecto<br>
@@ -878,7 +969,7 @@
                             <code>git status</code>
                         </div>
                         <div class="command-description">
-                            Tu comando más importante. Muestra el estado actual del repositorio: archivos modificados, nuevos, eliminados, y el estado del staging area.
+                            Muestra el estado del repositorio: archivos modificados, nuevos, o en staging.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git status<br>
@@ -894,7 +985,7 @@
                             <code>git add [archivo]</code>
                         </div>
                         <div class="command-description">
-                            Añade archivos al área de preparación (staging) para ser incluidos en el próximo commit.
+                            Añade archivos al área de preparación (staging) para el próximo commit.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git add README.md<br>
@@ -907,12 +998,24 @@
                             <code>git commit -m "Mensaje del commit"</code>
                         </div>
                         <div class="command-description">
-                            Guarda los cambios preparados en el repositorio con un mensaje descriptivo.
+                            Guarda los cambios preparados con un mensaje descriptivo.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git commit -m "Añade README inicial"<br>
                             <span class="command-output">[main (root-commit) a1b2c3d] Añade README inicial<br>
                             1 file changed, 10 insertions(+)</span>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git commit -a -m "Mensaje"</code>
+                        </div>
+                        <div class="command-description">
+                            Combina <code>git add</code> y <code>git commit</code> para archivos ya rastreados.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git commit -a -m "Actualiza README"
                         </div>
                     </div>
                 </div>
@@ -926,13 +1029,28 @@
                         <p>Crea un nuevo repositorio con <code>git init</code>.</p>
                     </div>
                     <div class="workflow-step" data-step="2">
-                        <h3>Añadir Cambios</h3>
-                        <p>Usa <code>git add</code> para preparar los archivos modificados.</p>
+                        <h3>Modificar</h3>
+                        <p>Edita archivos y verifica cambios con <code>git status</code>.</p>
                     </div>
                     <div class="workflow-step" data-step="3">
-                        <h3>Confirmar Cambios</h3>
-                        <p>Registra los cambios con <code>git commit -m "mensaje"</code>.</p>
+                        <h3>Preparar</h3>
+                        <p>Usa <code>git add</code> para preparar los archivos modificados.</p>
                     </div>
+                    <div class="workflow-step" data-step="4">
+                        <h3>Confirmar</h3>
+                        <p>Registra los cambios con <code>git commit</code>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>Mensajes de Commit Claros</h4>
+                    <p>Escribe mensajes descriptivos, e.g., "Añade validación de formularios" en lugar de "Cambios".</p>
+                </div>
+                <div class="tip-card">
+                    <h4>Usa .gitignore</h4>
+                    <p>Excluye archivos innecesarios como <code>node_modules</code> o <code>.env</code>.</p>
                 </div>
             </div>
         </div>
@@ -945,7 +1063,7 @@
                     Trabajando con Remotos
                 </h2>
                 <p class="concept-description">
-                    GitHub es una plataforma para alojar repositorios Git, permitiendo colaboración y control de versiones en equipo. Aquí aprenderás a conectar tu repositorio local con uno remoto.
+                    Conecta tu repositorio local con GitHub para colaborar y compartir tu código.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -953,7 +1071,7 @@
                             <code>git remote add origin [url]</code>
                         </div>
                         <div class="command-description">
-                            Conecta tu repositorio local a un repositorio remoto en GitHub.
+                            Conecta tu repositorio local a un repositorio remoto.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git remote add origin https://github.com/user/mi-proyecto.git
@@ -962,10 +1080,10 @@
 
                     <div class="command-card">
                         <div class="command-syntax">
-                            <code>git push -u origin main</code>
+                            <code>git push -u origin [rama]</code>
                         </div>
                         <div class="command-description">
-                            Envía tus commits locales al repositorio remoto, configurando la rama main como upstream.
+                            Envía tus commits al repositorio remoto y configura el upstream.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git push -u origin main<br>
@@ -978,7 +1096,7 @@
                             <code>git pull</code>
                         </div>
                         <div class="command-description">
-                            Descarga y fusiona los cambios del repositorio remoto en tu rama local.
+                            Descarga y fusiona cambios del repositorio remoto.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git pull origin main
@@ -990,11 +1108,25 @@
                             <code>git clone [url]</code>
                         </div>
                         <div class="command-description">
-                            Clona un repositorio remoto a tu máquina local, incluyendo todo su historial.
+                            Clona un repositorio remoto a tu máquina local.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git clone https://github.com/user/mi-proyecto.git<br>
                             <span class="command-output">Cloning into 'mi-proyecto'...</span>
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git remote -v</code>
+                        </div>
+                        <div class="command-description">
+                            Lista los remotos configurados para tu repositorio.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git remote -v<br>
+                            <span class="command-output">origin  https://github.com/user/mi-proyecto.git (fetch)<br>
+                            origin  https://github.com/user/mi-proyecto.git (push)</span>
                         </div>
                     </div>
                 </div>
@@ -1006,7 +1138,7 @@
                     Ramas (Branching)
                 </h2>
                 <p class="concept-description">
-                    Las ramas permiten trabajar en diferentes versiones de un proyecto simultáneamente. Son esenciales para el desarrollo colaborativo y la experimentación.
+                    Las ramas son esenciales para desarrollar características de forma aislada y colaborar en equipo.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -1039,7 +1171,7 @@
                             <code>git checkout -b [nombre-rama]</code>
                         </div>
                         <div class="command-description">
-                            Crea una nueva rama y cambia a ella en un solo paso.
+                            Crea y cambia a una nueva rama en un solo paso.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git checkout -b feature/nueva-funcion
@@ -1048,36 +1180,89 @@
 
                     <div class="command-card">
                         <div class="command-syntax">
+                            <code>git branch -m [nuevo-nombre]</code>
+                        </div>
+                        <div class="command-description">
+                            Renombra la rama actual.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git branch -m feature/nueva-funcion feature/mejorada
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
                             <code>git branch -d [nombre-rama]</code>
                         </div>
                         <div class="command-description">
-                            Elimina una rama local que ya ha sido fusionada.
+                            Elimina una rama local ya fusionada.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git branch -d feature/nueva-funcion
                         </div>
                     </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git branch</code>
+                        </div>
+                        <div class="command-description">
+                            Lista todas las ramas locales.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git branch<br>
+                            <span class="command-output">* main<br>  feature/nueva-funcion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-section">
+                <h2 class="concept-title">
+                    <div class="concept-icon">📂</div>
+                    Ignorar Archivos
+                </h2>
+                <p class="concept-description">
+                    Usa un archivo <code>.gitignore</code> para excluir archivos o carpetas que no deseas rastrear.
+                </p>
+                <div class="code-block">
+                    <pre># Ejemplo de .gitignore
+node_modules/
+dist/
+.env
+*.log
+                    </pre>
+                </div>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Patrones Comunes</h4>
+                        <p>Usa <code>*</code> para comodines, <code>!</code> para excepciones, y <code>/</code> para directorios.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Gitignore Global</h4>
+                        <p>Configura un <code>.gitignore_global</code> con <code>git config --global core.excludesfile ~/.gitignore_global</code>.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="workflow-diagram">
-                <h2 class="workflow-title">Flujo de Trabajo con Ramas</h2>
+                <h2 class="workflow-title">Flujo de Trabajo con Remotos y Ramas</h2>
                 <div class="workflow-steps">
                     <div class="workflow-step" data-step="1">
-                        <h3>Crear Rama</h3>
-                        <p>Usa <code>git checkout -b feature/nueva</code> para crear y cambiar a una rama.</p>
+                        <h3>Clonar o Conectar</h3>
+                        <p>Clona con <code>git clone</code> o añade remoto con <code>git remote add</code>.</p>
                     </div>
                     <div class="workflow-step" data-step="2">
-                        <h3>Desarrollar</h3>
-                        <p>Realiza cambios, usa <code>git add</code> y <code>git commit</code>.</p>
+                        <h3>Crear Rama</h3>
+                        <p>Usa <code>git checkout -b</code> para nuevas características.</p>
                     </div>
                     <div class="workflow-step" data-step="3">
-                        <h3>Push a Remoto</h3>
-                        <p>Envía la rama con <code>git push -u origin feature/nueva</code>.</p>
+                        <h3>Desarrollar y Commit</h3>
+                        <p>Realiza cambios, <code>git add</code>, y <code>git commit</code>.</p>
                     </div>
                     <div class="workflow-step" data-step="4">
-                        <h3>Crear Pull Request</h3>
-                        <p>En GitHub, crea un Pull Request para fusionar tu rama.</p>
+                        <h3>Push y Pull Request</h3>
+                        <p>Envía con <code>git push</code> y crea un PR en GitHub.</p>
                     </div>
                 </div>
             </div>
@@ -1091,7 +1276,7 @@
                     Fusiones y Resolución de Conflictos
                 </h2>
                 <p class="concept-description">
-                    La fusión combina ramas, pero a veces surgen conflictos que debes resolver manualmente. Aprende a manejar estas situaciones con confianza.
+                    Las fusiones combinan ramas, pero los conflictos requieren intervención manual. Aprende a gestionarlos.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -1112,7 +1297,7 @@
                             <code>git merge --abort</code>
                         </div>
                         <div class="command-description">
-                            Cancela una fusión en caso de conflictos que no deseas resolver.
+                            Cancela una fusión con conflictos.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git merge --abort
@@ -1124,29 +1309,39 @@
                             <code>git diff</code>
                         </div>
                         <div class="command-description">
-                            Muestra las diferencias entre el estado actual y el último commit, útil para resolver conflictos.
+                            Muestra diferencias entre el estado actual y el último commit.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git diff<br>
                             <span class="command-output">diff --git a/file.txt b/file.txt...</span>
                         </div>
                     </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git merge --no-ff [rama]</code>
+                        </div>
+                        <div class="command-description">
+                            Fuerza una fusión con un commit de merge, preservando el historial de la rama.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git merge --no-ff feature/nueva-funcion
+                        </div>
+                    </div>
                 </div>
                 <div class="danger-zone">
                     <h4>Resolución de Conflictos</h4>
-                    <p>
-                        Los conflictos ocurren cuando Git no puede fusionar automáticamente. Edita los archivos marcados con <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> y <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, elige las versiones correctas, luego usa <code>git add</code> y <code>git commit</code>.
-                    </p>
+                    <p>Edita los marcadores de conflicto (<code><<<<<<<</code>, <code>=======</code>, <code>>>>>>>></code>), luego usa <code>git add</code> y <code>git commit</code>.</p>
                 </div>
             </div>
 
             <div class="concept-section">
                 <h2 class="concept-title">
                     <div class="concept-icon">🔍</div>
-                    Inspección del Historial
+                    Inspección y Comparación
                 </h2>
                 <p class="concept-description">
-                    Explora el historial de commits para entender los cambios en tu proyecto y revertir errores si es necesario.
+                    Explora el historial y compara cambios para entender la evolución de tu proyecto.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -1164,14 +1359,14 @@
 
                     <div class="command-card">
                         <div class="command-syntax">
-                            <code>git log --oneline</code>
+                            <code>git log --oneline --graph</code>
                         </div>
                         <div class="command-description">
-                            Muestra el historial en una sola línea por commit.
+                            Muestra el historial en una línea con un gráfico de ramas.
                         </div>
                         <div class="command-example">
-                            <span class="terminal-prompt">$</span> git log --oneline<br>
-                            <span class="command-output">a1b2c3d Añade README inicial</span>
+                            <span class="terminal-prompt">$</span> git log --oneline --graph<br>
+                            <span class="command-output">* a1b2c3d Añade README<br>* b2c3d4e Inicial</span>
                         </div>
                     </div>
 
@@ -1180,24 +1375,98 @@
                             <code>git show [commit]</code>
                         </div>
                         <div class="command-description">
-                            Muestra los detalles de un commit específico.
+                            Muestra detalles de un commit específico.
                         </div>
                         <div class="command-example">
                             <span class="terminal-prompt">$</span> git show a1b2c3d
                         </div>
                     </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git diff [rama1] [rama2]</code>
+                        </div>
+                        <div class="command-description">
+                            Compara diferencias entre dos ramas.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git diff main feature/nueva-funcion
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="tips-grid">
-                <div class="tip-card">
-                    <h4>Commits Atómicos</h4>
-                    <p>Haz commits pequeños y enfocados. Esto facilita la revisión y la reversión de cambios.</p>
+            <div class="concept-section">
+                <h2 class="concept-title">
+                    <div class="concept-icon">🔙</div>
+                    Revertir Cambios
+                </h2>
+                <p class="concept-description">
+                    Aprende a deshacer errores sin perder el control de tu historial.
+                </p>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git reset [archivo]</code>
+                        </div>
+                        <div class="command-description">
+                            Quita un archivo del área de staging, pero conserva los cambios.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git reset README.md
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git reset --hard [commit]</code>
+                        </div>
+                        <div class="command-description">
+                            Restablece el repositorio a un commit específico, descartando cambios posteriores.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git reset --hard a1b2c3d
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git revert [commit]</code>
+                        </div>
+                        <div class="command-description">
+                            Crea un nuevo commit que deshace los cambios de un commit específico.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git revert a1b2c3d
+                        </div>
+                    </div>
                 </div>
-                <div class="tip-card">
-                    <h4>Usa .gitignore</h4>
-                    <p>Crea un archivo <code>.gitignore</code> para excluir archivos innecesarios, como <code>node_modules</code> o <code>.env</code>.</p>
+                <div class="danger-zone">
+                    <h4>Cuidado con Reset</h4>
+                    <p><code>git reset --hard</code> elimina cambios permanentemente. Usa <code>git revert</code> para deshacer de forma segura en ramas compartidas.</p>
                 </div>
+            </div>
+
+            <div class="quick-reference">
+                <h3>Referencia Rápida</h3>
+                <table>
+                    <tr>
+                        <th>Comando</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>git merge --no-ff</code></td>
+                        <td>Fusión con commit de merge</td>
+                    </tr>
+                    <tr>
+                        <td><code>git log --oneline --graph</code></td>
+                        <td>Historial gráfico simplificado</td>
+                    </tr>
+                    <tr>
+                        <td><code>git revert</code></td>
+                        <td>Deshace un commit</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -1209,7 +1478,7 @@
                     Rebase y Cherry-Pick
                 </h2>
                 <p class="concept-description">
-                    Herramientas avanzadas como rebase y cherry-pick te permiten reescribir el historial de commits para un control más preciso.
+                    Herramientas avanzadas para reescribir el historial y seleccionar commits específicos.
                 </p>
                 <div class="commands-grid">
                     <div class="command-card">
@@ -1227,18 +1496,6 @@
 
                     <div class="command-card">
                         <div class="command-syntax">
-                            <code>git cherry-pick [commit]</code>
-                        </div>
-                        <div class="command-description">
-                            Aplica un commit específico de otra rama a la rama actual.
-                        </div>
-                        <div class="command-example">
-                            <span class="terminal-prompt">$</span> git cherry-pick a1b2c3d
-                        </div>
-                    </div>
-
-                    <div class="command-card">
-                        <div class="command-syntax">
                             <code>git rebase -i [commit]</code>
                         </div>
                         <div class="command-description">
@@ -1248,10 +1505,34 @@
                             <span class="terminal-prompt">$</span> git rebase -i HEAD~3
                         </div>
                     </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git cherry-pick [commit]</code>
+                        </div>
+                        <div class="command-description">
+                            Aplica un commit específico de otra rama.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git cherry-pick a1b2c3d
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git rebase --onto [rama] [rama-base] [rama-objetivo]</code>
+                        </div>
+                        <div class="command-description">
+                            Reubica una rama sobre otra base específica.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git rebase --onto main develop feature/nueva-funcion
+                        </div>
+                    </div>
                 </div>
                 <div class="danger-zone">
                     <h4>Precaución con Rebase</h4>
-                    <p>Evita usar <code>rebase</code> en ramas compartidas, ya que reescribe el historial y puede causar conflictos con otros colaboradores.</p>
+                    <p>Evita <code>rebase</code> en ramas compartidas, ya que reescribe el historial y puede causar conflictos.</p>
                 </div>
             </div>
 
@@ -1261,7 +1542,7 @@
                     Automatización con Hooks
                 </h2>
                 <p class="concept-description">
-                    Los Git Hooks son scripts que se ejecutan automáticamente en ciertos eventos de Git, como antes o después de un commit o push.
+                    Los Git Hooks automatizan tareas en eventos específicos, como commits o pushes.
                 </p>
                 <div class="code-block">
                     <pre><span class="terminal-prompt">$</span> cd .git/hooks<br>
@@ -1269,28 +1550,102 @@
 <span class="terminal-prompt">$</span> echo '#!/bin/sh\nnpm run lint' > pre-commit
                     </pre>
                 </div>
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <h4>Hook Pre-Commit</h4>
-                        <p>Ejecuta pruebas o linters antes de cada commit para garantizar la calidad del código.</p>
-                    </div>
-                    <div class="tip-card">
-                        <h4>Hook Post-Merge</h4>
-                        <p>Automatiza tareas después de una fusión, como actualizar dependencias.</p>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>chmod +x .git/hooks/pre-commit</code>
+                        </div>
+                        <div class="command-description">
+                            Da permisos de ejecución al hook pre-commit.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> chmod +x .git/hooks/pre-commit
+                        </div>
                     </div>
                 </div>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Hook Pre-Push</h4>
+                        <p>Ejecuta pruebas antes de <code>git push</code> para evitar errores en el remoto.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Hook Post-Commit</h4>
+                        <p>Notifica o ejecuta tareas tras cada commit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-section">
+                <h2 class="concept-title">
+                    <div class="concept-icon">🔐</div>
+                    Gestión de Credenciales
+                </h2>
+                <p class="concept-description">
+                    Configura credenciales seguras para interactuar con repositorios remotos.
+                </p>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git config --global credential.helper cache</code>
+                        </div>
+                        <div class="command-description">
+                            Almacena credenciales temporalmente en memoria.
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git config --global credential.helper cache
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <div class="command-syntax">
+                            <code>git config --global credential.helper store</code>
+                        </div>
+                        <div class="command-description">
+                            Almacena credenciales permanentemente (¡cuidado con la seguridad!).
+                        </div>
+                        <div class="command-example">
+                            <span class="terminal-prompt">$</span> git config --global credential.helper store
+                        </div>
+                    </div>
+                </div>
+                <div class="danger-zone">
+                    <h4>Seguridad de Credenciales</h4>
+                    <p>Usa tokens de acceso personal (PAT) en lugar de contraseñas para GitHub.</p>
+                </div>
+            </div>
+
+            <div class="quick-reference">
+                <h3>Referencia Rápida Experta</h3>
+                <table>
+                    <tr>
+                        <th>Comando</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><code>git rebase -i</code></td>
+                        <td>Reescribe historial interactivamente</td>
+                    </tr>
+                    <tr>
+                        <td><code>git cherry-pick</code></td>
+                        <td>Aplica commits específicos</td>
+                    </tr>
+                    <tr>
+                        <td><code>git config credential.helper</code></td>
+                        <td>Gestiona credenciales</td>
+                    </tr>
+                </table>
             </div>
 
             <div class="workflow-diagram">
                 <h2 class="workflow-title">Flujo de Trabajo Experto</h2>
                 <div class="workflow-steps">
                     <div class="workflow-step" data-step="1">
-                        <h3>Rebase Interactivo</h3>
-                        <p>Limpia tu historial con <code>git rebase -i</code>.</p>
+                        <h3>Limpieza de Historial</h3>
+                        <p>Usa <code>git rebase -i</code> para reorganizar commits.</p>
                     </div>
                     <div class="workflow-step" data-step="2">
-                        <h3>Cherry-Pick</h3>
-                        <p>Selecciona commits específicos con <code>git cherry-pick</code>.</p>
+                        <h3>Selección de Commits</h3>
+                        <p>Aplica cambios específicos con <code>git cherry-pick</code>.</p>
                     </div>
                     <div class="workflow-step" data-step="3">
                         <h3>Automatización</h3>
@@ -1298,7 +1653,7 @@
                     </div>
                     <div class="workflow-step" data-step="4">
                         <h3>Push Seguro</h3>
-                        <p>Verifica todo antes de <code>git push</code>.</p>
+                        <p>Verifica con <code>git log</code> antes de <code>git push</code>.</p>
                     </div>
                 </div>
             </div>
