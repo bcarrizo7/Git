@@ -151,7 +151,7 @@
 
         .header h1 {
             font-family: 'Orbitron', monospace;
-            font-size: 5rem;
+            font-size: clamp(2.5rem, 10vw, 5rem);
             font-weight: 900;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -323,7 +323,7 @@
 
         .concept-title {
             font-family: 'Orbitron', monospace;
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             color: var(--text-primary);
             margin-bottom: 25px;
             display: flex;
@@ -373,7 +373,7 @@
 
         .commands-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
@@ -782,12 +782,25 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 40px 10px;
+            }
+
             .header h1 {
-                font-size: 3rem;
+                font-size: clamp(2.5rem, 8vw, 3.2rem);
+            }
+
+            .header p {
+                font-size: 1.4rem;
+                letter-spacing: 2px;
+            }
+
+            .concept-section {
+                padding: 30px 25px;
             }
 
             .commands-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             }
 
             .workflow-steps {
@@ -817,6 +830,88 @@
 
             .quick-reference table {
                 font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: clamp(2.2rem, 12vw, 3.2rem);
+            }
+
+            .header p {
+                font-size: 1.2rem;
+                letter-spacing: 1.5px;
+            }
+
+            .concept-section {
+                padding: 25px 20px;
+            }
+
+            .concept-title {
+                gap: 12px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .concept-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+
+            .command-card {
+                padding: 20px;
+            }
+
+            .command-syntax {
+                font-size: 1rem;
+                padding: 12px 16px;
+            }
+
+            .command-syntax::before {
+                left: 16px;
+                top: 12px;
+            }
+
+            .command-syntax code {
+                margin-left: 22px;
+            }
+
+            .workflow-step {
+                padding: 25px 20px;
+            }
+
+            .workflow-step h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .concept-title {
+                font-size: clamp(1.6rem, 8vw, 2rem);
+            }
+
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .command-syntax {
+                font-size: 0.95rem;
+            }
+
+            .command-syntax code {
+                margin-left: 20px;
+            }
+
+            .tip-card h4,
+            .advanced-card h3,
+            .workflow-step h3,
+            .quick-reference h3 {
+                font-size: 1.2rem;
             }
         }
 
