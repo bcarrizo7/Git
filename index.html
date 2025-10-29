@@ -801,6 +801,11 @@
         .cyber-accent {
             animation: cyber-pulse 2s ease-in-out infinite;
         }
+
+        details.command-card > summary::-webkit-details-marker { display: none; }
+        details.command-card > summary { list-style: none; cursor: pointer; }
+        details.command-card[open] { box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2); border-color: var(--primary-cyan); }
+
     </style>
 </head>
 <body>
@@ -819,9 +824,11 @@
             <div class="level-tab" data-level="intermediate">⚡ INTERMEDIO</div>
             <div class="level-tab" data-level="advanced">🚀 AVANZADO</div>
             <div class="level-tab" data-level="expert">💎 EXPERTO</div>
+            <div class="level-tab" data-level="internals">🧠 INTERNALS</div>
+            <div class="level-tab" data-level="faq">❓ FAQ</div>
         </div>
 
-        <!-- NIVEL PRINCIPIANTE -->
+<!-- NIVEL PRINCIPIANTE -->
         <div class="level-content active" id="beginner">
             <div class="concept-section">
                 <h2 class="concept-title">
@@ -1658,6 +1665,285 @@ dist/
                 </div>
             </div>
         </div>
+    
+        <!-- NIVEL INTERNALS -->
+        <div class="level-content" id="internals">
+            <div class="concept-section">
+                <h2 class="concept-title">
+                    <div class="concept-icon">🧠</div>
+                    ¿Cómo funciona Git por dentro? (Lo fundamental)
+                </h2>
+                <p class="concept-description">
+                    Git es un <span class="highlight">almacén de objetos</span> dentro de la carpeta <code>.git/</code>.
+                    Todo se basa en <span class="highlight">snapshots inmutables</span> identificados por un hash (SHA-1 o SHA-256).
+                    Hay tres áreas clave: <span class="highlight">Working Directory</span> (tus archivos), <span class="highlight">Index/Staging</span> (lo que vas a commitear)
+                    y <span class="highlight">HEAD</span> (el último snapshot confirmado en la rama actual).
+                </p>
+
+                <div class="advanced-concepts">
+                    <div class="advanced-card">
+                        <h3>1) Objetos de Git</h3>
+                        <p><span class="secondary-highlight">blob</span> = contenido del archivo; <span class="secondary-highlight">tree</span> = directorio (lista blobs/trees);
+                        <span class="secondary-highlight">commit</span> = snapshot + metadatos (autor, fecha, padres, mensaje);
+                        <span class="secondary-highlight">tag</span> = puntero con nombre (anotada o ligera).</p>
+                        <div class="code-block"><pre>.git/objects/<hash-prefix>/<hash-sufijo>
+.git/refs/heads/   # ramas
+.git/refs/tags/    # tags
+HEAD               # referencia a la rama actual (e.g., refs/heads/main)</pre></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>2) Referencias y ramas</h3>
+                        <p>Una <span class="highlight">rama</span> es un puntero (ref) a un commit. Al hacer nuevos commits,
+                        la rama avanza apuntando al último commit. <code>HEAD</code> normalmente apunta a una rama; en
+                        <em>detached HEAD</em>, <code>HEAD</code> apunta directo a un commit.</p>
+                        <div class="code-block"><pre># Ver a qué commit apunta HEAD
+git rev-parse HEAD
+# Ver dónde apuntan las refs
+git show-ref --heads --tags</pre></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>3) Staging (Index)</h3>
+                        <p>El <span class="highlight">index</span> (o staging) es un archivo binario en <code>.git/index</code> que
+                        registra qué versiones exactas (hashes) se confirmarán en el próximo commit.</p>
+                        <div class="code-block"><pre># Muestra diferencias entre WD, index y HEAD
+git diff            # WD vs. index
+git diff --staged   # index vs. HEAD</pre></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>4) Packs y GC</h3>
+                        <p>Para eficiencia, Git comprime objetos y deltas en <span class="highlight">packfiles</span>.
+                        <code>git gc</code> limpia y reempaca para ahorrar espacio y acelerar lecturas.</p>
+                        <div class="code-block"><pre>git count-objects -vH
+git gc --aggressive  # con cuidado en repos grandes</pre></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>5) Merge vs. Rebase (visión interna)</h3>
+                        <p><span class="highlight">Merge</span>: crea un commit con dos padres (historial ramificado).
+                        <span class="highlight">Rebase</span>: reescribe los padres de tus commits para “recolgarlos” sobre otra base (historial lineal).</p>
+                        <div class="code-block"><pre># Fast-forward: la rama sólo avanza el puntero
+git merge --ff-only rama
+# 3-way merge: crea commit de merge si hay divergencia
+git merge rama</pre></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>6) Remotos y refspec</h3>
+                        <p>Los remotos son colecciones de refs. La <span class="highlight">refspec</span> define qué refs locales
+                        se sincronizan con cuáles remotas (e.g., <code>refs/heads/*:refs/remotes/origin/*</code>).</p>
+                        <div class="code-block"><pre>git ls-remote origin
+git fetch origin 'refs/heads/*:refs/remotes/origin/*'</pre></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- NIVEL FAQ -->
+        <div class="level-content" id="faq">
+            <div class="concept-section">
+                <h2 class="concept-title">
+                    <div class="concept-icon">❓</div>
+                    25 problemas comunes y soluciones rápidas
+                </h2>
+                <p class="concept-description">
+                    Un <span class="highlight">resuelve-rápido</span> para emergencias de Git. Expande cada punto para ver el comando o procedimiento sugerido.
+                </p>
+                <div class="commands-grid">
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>01. No tengo nombre/email configurado</code></summary>
+                    <div class="command-example"><pre>git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>02. Cometí con email equivocado (último commit)</code></summary>
+                    <div class="command-example"><pre>git commit --amend --author="Nombre <nuevo@email.com>"</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>03. Hice commit en la rama equivocada</code></summary>
+                    <div class="command-example"><pre>git switch la-rama-correcta
+git cherry-pick <hash-del-commit>
+git switch -
+git reset --hard HEAD~   # si quieres borrar en la rama equivocada</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>04. Deshacer el último commit (conservar cambios)</code></summary>
+                    <div class="command-example"><pre>git reset --soft HEAD~
+# o
+git reset --mixed HEAD~   # mueve cambios al WD</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>05. Deshacer el último commit (descartar cambios)</code></summary>
+                    <div class="command-example"><pre>git reset --hard HEAD~</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>06. Recuperar archivo borrado</code></summary>
+                    <div class="command-example"><pre>git checkout HEAD -- ruta/archivo.ext
+# o
+git restore --source=HEAD -- ruta/archivo.ext</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>07. Guardar cambios sin commitear</code></summary>
+                    <div class="command-example"><pre>git stash push -m 'wip'
+# luego
+git stash pop</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>08. Resolver conflicto de merge</code></summary>
+                    <div class="command-example"><pre>Edita marcadores <<<<<<<, =======, >>>>>>>
+Luego: git add . && git commit</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>09. Sincronizar con remoto antes de push</code></summary>
+                    <div class="command-example"><pre>git pull --rebase origin main
+# evita merges innecesarios</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>10. Push rechazado; necesito forzar</code></summary>
+                    <div class="command-example"><pre>git push --force-with-lease
+# más seguro que --force</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>11. Subí credenciales por error</code></summary>
+                    <div class="command-example"><pre>REVOCAR claves/tokens inmediatamente.
+Reescribir historial (git filter-repo) y rotar secretos.</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>12. Añadí archivos pesados por error</code></summary>
+                    <div class="command-example"><pre>git rm --cached ruta/archivo
+Eco en .gitignore y commit.
+Si ya están en historia, usar filter-repo.</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>13. Eliminar archivo del historial</code></summary>
+                    <div class="command-example"><pre>git filter-repo --path ruta/archivo --invert-paths
+# (instalar git-filter-repo)</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>14. Estoy en detached HEAD</code></summary>
+                    <div class="command-example"><pre>git switch -
+# o crear rama desde ahí:
+git switch -c fix/desde-detached</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>15. Upstream no configurado</code></summary>
+                    <div class="command-example"><pre>git push -u origin rama-actual
+# o
+git branch --set-upstream-to=origin/rama rama</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>16. Unrelated histories</code></summary>
+                    <div class="command-example"><pre>git pull --allow-unrelated-histories</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>17. fatal: not a git repository</code></summary>
+                    <div class="command-example"><pre>Ejecuta dentro de un repo o inicializa: git init</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>18. Permission denied (publickey)</code></summary>
+                    <div class="command-example"><pre>Configura SSH o usa HTTPS.
+ssh-keygen -t ed25519
+Sube la clave pública a GitHub.</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>19. PAT y autenticación</code></summary>
+                    <div class="command-example"><pre>Usa Token en lugar de contraseña.
+Configura credential helper o gh auth login.</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>20. Remote tiene commits que yo no</code></summary>
+                    <div class="command-example"><pre>git pull --rebase origin rama
+# resuelve conflictos y luego push</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>21. LF/CRLF advertencias</code></summary>
+                    <div class="command-example"><pre>git config core.autocrlf input     # macOS/Linux
+# o
+git config core.autocrlf true      # Windows</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>22. Cambiar rama por defecto a main</code></summary>
+                    <div class="command-example"><pre>git branch -m master main
+git push -u origin main
+# Ajusta en GitHub los defaults</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>23. Renombrar rama remota</code></summary>
+                    <div class="command-example"><pre>git branch -m vieja nueva
+git push origin :vieja nueva
+git push -u origin nueva</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>24. Hice clone shallow y ahora necesito todo</code></summary>
+                    <div class="command-example"><pre>git fetch --unshallow</pre></div>
+                </details>
+    
+
+                <details class="command-card">
+                    <summary class="command-syntax"><code>25. Limpiar archivos no rastreados</code></summary>
+                    <div class="command-example"><pre>git clean -fd
+# CUIDADO: elimina sin preguntar</pre></div>
+                </details>
+    
+                </div>
+                <div class="danger-zone" style="margin-top:30px;">
+                    <h4>Consejo de seguridad</h4>
+                    <p>Antes de ejecutar comandos destructivos (<code>reset --hard</code>, <code>clean -fd</code>), crea una rama de respaldo:
+                    <code>git switch -c backup/antes-de-cambiar</code>.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
