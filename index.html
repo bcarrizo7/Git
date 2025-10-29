@@ -222,6 +222,7 @@
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
+            margin-bottom: 50px;
         }
 
         .level-tab {
@@ -812,15 +813,8 @@
                 flex-direction: column;
             }
 
-            .level-tabs-wrapper.carousel-active {
-                width: 100%;
-                gap: 12px;
-            }
-
-            .level-tabs-wrapper.carousel-active .carousel-btn {
-                display: flex;
-                width: 48px;
-                height: 48px;
+            .level-tabs {
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
             }
@@ -830,18 +824,30 @@
             }
 
             .level-tabs.is-carousel {
-                display: grid;
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 12px;
+                flex-direction: row;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                gap: 0;
+                flex-wrap: nowrap;
+                overflow: hidden;
+                padding: 0 12px;
+                touch-action: pan-y;
             }
 
             .level-tabs.is-carousel .level-tab {
+                flex: 0 0 70%;
+                max-width: 70%;
                 opacity: 0;
-                transform: scale(0.85);
+                transform: translateX(0) scale(0.85);
                 pointer-events: none;
-                padding: 12px 10px;
-                font-size: 0.95rem;
-                min-height: 72px;
+                padding: 16px 18px;
+                font-size: 1rem;
+                min-height: 96px;
+                transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
+                white-space: normal;
             }
 
             .level-tabs.is-carousel .level-tab.carousel-left,
@@ -852,22 +858,22 @@
             }
 
             .level-tabs.is-carousel .level-tab.carousel-left {
-                grid-column: 1;
-                opacity: 0.75;
-                transform: scale(0.9);
+                opacity: 0.7;
+                transform: translateX(-80%) scale(0.9);
+                z-index: 1;
             }
 
             .level-tabs.is-carousel .level-tab.carousel-center {
-                grid-column: 2;
                 opacity: 1;
-                transform: scale(1);
+                transform: translateX(0) scale(1);
                 box-shadow: 0 10px 30px var(--shadow-cyan);
+                z-index: 2;
             }
 
             .level-tabs.is-carousel .level-tab.carousel-right {
-                grid-column: 3;
-                opacity: 0.75;
-                transform: scale(0.9);
+                opacity: 0.7;
+                transform: translateX(80%) scale(0.9);
+                z-index: 1;
             }
 
             .level-tabs.is-carousel .level-tab.carousel-hidden {
@@ -2066,14 +2072,14 @@ git push -u origin nueva</pre></div>
         const contents = document.querySelectorAll('.level-content');
         const tabList = Array.from(tabs);
         const levelTabs = document.querySelector('.level-tabs');
-        const levelTabsWrapper = document.querySelector('.level-tabs-wrapper');
-        const prevBtn = document.querySelector('.carousel-btn.prev');
-        const nextBtn = document.querySelector('.carousel-btn.next');
         const carouselClasses = ['carousel-left', 'carousel-center', 'carousel-right', 'carousel-hidden'];
         const mobileQuery = window.matchMedia('(max-width: 768px)');
         let currentIndex = tabList.findIndex(tab => tab.classList.contains('active'));
         if (currentIndex === -1) currentIndex = 0;
         let isCarousel = false;
+        let pointerActive = false;
+        let pointerStartX = 0;
+        let pointerLastX = 0;
 
         const showTabAtIndex = (index) => {
             const total = tabList.length;
@@ -2124,9 +2130,6 @@ git push -u origin nueva</pre></div>
             if (levelTabs) {
                 levelTabs.classList.add('is-carousel');
             }
-            if (levelTabsWrapper) {
-                levelTabsWrapper.classList.add('carousel-active');
-            }
             currentIndex = tabList.findIndex(tab => tab.classList.contains('active'));
             if (currentIndex === -1) currentIndex = 0;
             updateCarousel();
@@ -2134,11 +2137,9 @@ git push -u origin nueva</pre></div>
 
         const disableCarousel = () => {
             isCarousel = false;
+            pointerActive = false;
             if (levelTabs) {
                 levelTabs.classList.remove('is-carousel');
-            }
-            if (levelTabsWrapper) {
-                levelTabsWrapper.classList.remove('carousel-active');
             }
             tabList.forEach(tab => {
                 carouselClasses.forEach(cls => tab.classList.remove(cls));
@@ -2160,12 +2161,62 @@ git push -u origin nueva</pre></div>
             tab.addEventListener('click', () => showTabAtIndex(index));
         });
 
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => showTabAtIndex(currentIndex - 1));
-        }
+        const handlePointerDown = (event) => {
+            if (!isCarousel || !levelTabs) return;
+            pointerActive = true;
+            pointerStartX = event.clientX;
+            pointerLastX = pointerStartX;
+            if (levelTabs.setPointerCapture) {
+                levelTabs.setPointerCapture(event.pointerId);
+            }
+        };
 
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => showTabAtIndex(currentIndex + 1));
+        const handlePointerMove = (event) => {
+            if (!isCarousel || !pointerActive) return;
+            pointerLastX = event.clientX;
+        };
+
+        const releasePointerCaptureIfNeeded = (event) => {
+            if (
+                !event ||
+                !levelTabs ||
+                !levelTabs.hasPointerCapture ||
+                !levelTabs.hasPointerCapture(event.pointerId)
+            ) {
+                return;
+            }
+            levelTabs.releasePointerCapture(event.pointerId);
+        };
+
+        const handlePointerEnd = (event) => {
+            if (!isCarousel || !pointerActive) {
+                releasePointerCaptureIfNeeded(event);
+                return;
+            }
+            releasePointerCaptureIfNeeded(event);
+            pointerLastX = event.clientX;
+            const delta = pointerLastX - pointerStartX;
+            if (Math.abs(delta) > 40) {
+                showTabAtIndex(currentIndex + (delta < 0 ? 1 : -1));
+            }
+            pointerActive = false;
+        };
+
+        const cancelPointer = (event) => {
+            if (!pointerActive) {
+                releasePointerCaptureIfNeeded(event);
+                return;
+            }
+            releasePointerCaptureIfNeeded(event);
+            pointerActive = false;
+        };
+
+        if (levelTabs) {
+            levelTabs.addEventListener('pointerdown', handlePointerDown);
+            levelTabs.addEventListener('pointermove', handlePointerMove);
+            levelTabs.addEventListener('pointerup', handlePointerEnd);
+            levelTabs.addEventListener('pointercancel', cancelPointer);
+            levelTabs.addEventListener('pointerleave', cancelPointer);
         }
     </script>
 </body>
