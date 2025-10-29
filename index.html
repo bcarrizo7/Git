@@ -790,6 +790,41 @@
             color: var(--text-primary);
         }
 
+        .level-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .level-navigation-button {
+            background: var(--gradient-primary);
+            border: none;
+            color: var(--bg-dark);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 12px 30px var(--shadow-cyan);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .level-navigation-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px var(--shadow-cyan);
+        }
+
+        .level-navigation-button:active {
+            transform: translateY(-1px);
+        }
+
+        .level-navigation-button:focus {
+            outline: 2px solid var(--primary-cyan);
+            outline-offset: 4px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 40px 10px;
@@ -839,6 +874,14 @@
 
             .quick-reference table {
                 font-size: 0.9rem;
+            }
+
+            .level-navigation-button {
+                width: 100%;
+            }
+
+            .level-navigation {
+                justify-content: center;
             }
         }
 
@@ -1202,6 +1245,10 @@
                     <p>Excluye archivos innecesarios como <code>node_modules</code> o <code>.env</code>.</p>
                 </div>
             </div>
+
+            <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="intermediate">Subir de nivel</button>
+            </div>
         </div>
 
         <!-- NIVEL INTERMEDIO -->
@@ -1415,6 +1462,10 @@ dist/
                     </div>
                 </div>
             </div>
+
+            <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="advanced">Subir de nivel</button>
+            </div>
         </div>
 
         <!-- NIVEL AVANZADO -->
@@ -1617,6 +1668,10 @@ dist/
                     </tr>
                 </table>
             </div>
+
+            <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="expert">Subir de nivel</button>
+            </div>
         </div>
 
         <!-- NIVEL EXPERTO -->
@@ -1806,8 +1861,12 @@ dist/
                     </div>
                 </div>
             </div>
+
+            <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="internals">Subir de nivel</button>
+            </div>
         </div>
-    
+
         <!-- NIVEL INTERNALS -->
         <div class="level-content" id="internals">
             <div class="concept-section">
@@ -1880,6 +1939,10 @@ git merge rama</pre></div>
 git fetch origin 'refs/heads/*:refs/remotes/origin/*'</pre></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="faq">Subir de nivel</button>
             </div>
         </div>
 
@@ -2083,6 +2146,10 @@ git push -u origin nueva</pre></div>
                     <p>Antes de ejecutar comandos destructivos (<code>reset --hard</code>, <code>clean -fd</code>), crea una rama de respaldo:
                     <code>git switch -c backup/antes-de-cambiar</code>.</p>
                 </div>
+
+                <div class="level-navigation">
+                    <button class="level-navigation-button" data-next-level="beginner">Volver al nivel inicial</button>
+                </div>
             </div>
         </div>
 
@@ -2130,6 +2197,20 @@ git push -u origin nueva</pre></div>
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => activateTab(tab));
+        });
+
+        const levelNavigationButtons = document.querySelectorAll('.level-navigation-button');
+        levelNavigationButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const nextLevel = button.getAttribute('data-next-level');
+                if (!nextLevel) return;
+
+                const targetTab = document.querySelector(`.level-tab[data-level="${nextLevel}"]`);
+                if (!targetTab) return;
+
+                activateTab(targetTab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
 
         const initialTab = document.querySelector('.level-tab.active') || tabs[0];
