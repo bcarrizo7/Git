@@ -456,7 +456,13 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             position: relative;
-            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .command-example pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .command-example::before {
@@ -496,14 +502,17 @@
 
         .workflow-title {
             font-family: 'Orbitron', monospace;
-            font-size: 3rem;
+            font-size: clamp(2.2rem, 6vw, 3rem);
+            line-height: 1.1;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: clamp(1.5px, 0.7vw, 3px);
+            text-align: center;
+            word-break: break-word;
         }
 
         .workflow-steps {
@@ -887,6 +896,15 @@
 
             .workflow-step h3 {
                 font-size: 1.1rem;
+            }
+
+            .workflow-diagram {
+                padding: 30px 18px;
+            }
+
+            .workflow-title {
+                font-size: clamp(1.8rem, 9vw, 2.4rem);
+                letter-spacing: 1.5px;
             }
         }
 
