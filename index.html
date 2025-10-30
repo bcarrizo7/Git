@@ -823,21 +823,37 @@
             transition: transform 0.3s ease, filter 0.3s ease;
         }
 
+        .level-navigation-button::after {
+            content: attr(data-hover-icon);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            letter-spacing: 0;
+            opacity: 0;
+            transform: translateY(12px) scale(0.65);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            color: #dfe6f3;
+            background: linear-gradient(130deg, #f8f9ff 0%, #d5d9e4 25%, #c1c7d4 50%, #eff2f9 75%, #b4bcc9 100%);
+            background-size: 220% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow:
+                0 0 14px rgba(255, 255, 255, 0.8),
+                0 0 28px rgba(192, 212, 255, 0.75),
+                0 0 42px rgba(120, 180, 255, 0.6);
+        }
+
         .level-navigation-button:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 45px rgba(0, 255, 255, 0.5);
             font-size: 1.12rem;
             letter-spacing: 3px;
             color: transparent;
-            background-image: linear-gradient(130deg, #f8f9ff 0%, #d9e3ff 25%, #a8bfff 50%, #eef3ff 75%, #b3c6ff 100%);
-            background-size: 220% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: silver-shimmer 1.5s ease-in-out infinite;
-            text-shadow:
-                0 0 12px rgba(255, 255, 255, 0.8),
-                0 0 20px rgba(173, 216, 255, 0.75),
-                0 0 35px rgba(120, 180, 255, 0.65);
         }
 
         .level-navigation-button:hover::before {
@@ -845,10 +861,34 @@
             filter: brightness(1.2);
         }
 
-        @keyframes silver-shimmer {
-            0% { background-position: 0% center; text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 25px rgba(173, 216, 255, 0.6), 0 0 45px rgba(90, 160, 255, 0.5); }
-            50% { background-position: 100% center; text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 30px rgba(173, 216, 255, 0.85), 0 0 55px rgba(120, 180, 255, 0.7); }
-            100% { background-position: 0% center; text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 25px rgba(173, 216, 255, 0.6), 0 0 45px rgba(90, 160, 255, 0.5); }
+        .level-navigation-button:hover::after {
+            opacity: 1;
+            transform: translateY(-2px) scale(1.15);
+            animation: rocket-shimmer 1.6s ease-in-out infinite;
+        }
+
+        @keyframes rocket-shimmer {
+            0% {
+                background-position: 0% center;
+                text-shadow:
+                    0 0 16px rgba(255, 255, 255, 0.85),
+                    -4px 0 20px rgba(200, 220, 255, 0.7),
+                    4px 0 26px rgba(140, 200, 255, 0.6);
+            }
+            50% {
+                background-position: 100% center;
+                text-shadow:
+                    0 0 22px rgba(255, 255, 255, 0.95),
+                    4px 0 26px rgba(200, 220, 255, 0.75),
+                    -4px 0 30px rgba(140, 200, 255, 0.65);
+            }
+            100% {
+                background-position: 0% center;
+                text-shadow:
+                    0 0 16px rgba(255, 255, 255, 0.85),
+                    -4px 0 20px rgba(200, 220, 255, 0.7),
+                    4px 0 26px rgba(140, 200, 255, 0.6);
+            }
         }
 
         .level-navigation-button:active {
@@ -1446,7 +1486,7 @@
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="intermediate">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="intermediate" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
@@ -1663,7 +1703,7 @@ dist/
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="advanced">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="advanced" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
@@ -1869,7 +1909,7 @@ dist/
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="expert">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="expert" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
@@ -2062,7 +2102,7 @@ dist/
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="internals">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="internals" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
@@ -2141,7 +2181,7 @@ git fetch origin 'refs/heads/*:refs/remotes/origin/*'</pre></div>
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="cheatsheet">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="cheatsheet" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
@@ -2362,7 +2402,7 @@ git fetch origin 'refs/heads/*:refs/remotes/origin/*'</pre></div>
             </div>
 
             <div class="level-navigation">
-                <button class="level-navigation-button" data-next-level="faq">Subir de nivel</button>
+                <button class="level-navigation-button" data-next-level="faq" data-hover-icon="🚀">Subir de nivel</button>
             </div>
         </div>
 
