@@ -989,6 +989,169 @@
         details.command-card > summary { list-style: none; cursor: pointer; }
         details.command-card[open] { box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2); border-color: var(--primary-cyan); }
 
+        .cheatsheet-section {
+            margin: 50px 0;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 18px;
+            padding: clamp(20px, 5vw, 40px);
+            box-shadow: 0 20px 45px rgba(0, 255, 255, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cheatsheet-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08), rgba(138, 43, 226, 0.05));
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cheatsheet-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .cheatsheet-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 6vw, 3rem);
+            letter-spacing: 1px;
+        }
+
+        .cheatsheet-header p {
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.5;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+        }
+
+        .cheatsheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .cheatsheet-card {
+            background: rgba(5, 12, 25, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cheatsheet-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0, 255, 255, 0.18);
+        }
+
+        .cheatsheet-card h3 {
+            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary-cyan);
+        }
+
+        .cheatsheet-badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: rgba(0, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 255, 255, 0.35);
+        }
+
+        .command-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 14px;
+            background: rgba(0, 40, 60, 0.45);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 180, 255, 0.22);
+        }
+
+        .command-row strong {
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .command-row span {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .copy-button {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.12);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .copy-button:hover {
+            background: rgba(0, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: var(--gradient-primary);
+            border-color: var(--secondary-cyan);
+        }
+
+        .flags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .flag-card {
+            background: rgba(8, 18, 35, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.25);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .flag-card code {
+            font-size: 1rem;
+            color: var(--primary-cyan);
+        }
+
+        .flag-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 640px) {
+            .command-row {
+                grid-template-columns: 1fr;
+            }
+
+            .copy-button {
+                justify-self: flex-start;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1009,6 +1172,7 @@
                 <div class="level-tab" data-level="advanced">🚀 AVANZADO</div>
                 <div class="level-tab" data-level="expert">💎 EXPERTO</div>
                 <div class="level-tab" data-level="internals">🧠 INTERNALS</div>
+                <div class="level-tab" data-level="cheatsheet">📎 CHEATSHEET</div>
                 <div class="level-tab" data-level="faq">❓ FAQ</div>
             </div>
         </div>
@@ -1942,6 +2106,227 @@ git fetch origin 'refs/heads/*:refs/remotes/origin/*'</pre></div>
             </div>
 
             <div class="level-navigation">
+                <button class="level-navigation-button" data-next-level="cheatsheet">Subir de nivel</button>
+            </div>
+        </div>
+
+
+        <!-- NIVEL CHEATSHEET -->
+        <div class="level-content" id="cheatsheet">
+            <div class="cheatsheet-section">
+                <div class="cheatsheet-header">
+                    <h2>
+                        <span class="cheatsheet-badge">Atajos esenciales</span>
+                        CheatSheet de comandos
+                    </h2>
+                    <p>
+                        Copia al instante los comandos más usados y entiende qué significan las abreviaturas más comunes.
+                        ¡Perfecto para cuando necesitas velocidad sin perder precisión!
+                    </p>
+                </div>
+
+                <div class="cheatsheet-grid">
+                    <div class="cheatsheet-card">
+                        <h3>📂 Flujo básico</h3>
+                        <div class="command-row">
+                            <div>
+                                <strong>git status</strong>
+                                <span>Estado del repositorio (WD vs staging).</span>
+                            </div>
+                            <button class="copy-button" data-command="git status">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git add .</strong>
+                                <span>Agrega todos los cambios al staging area.</span>
+                            </div>
+                            <button class="copy-button" data-command="git add .">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git commit -m "mensaje"</strong>
+                                <span>Crea un commit con mensaje corto.</span>
+                            </div>
+                            <button class="copy-button" data-command="git commit -m &quot;mensaje&quot;">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git log --oneline</strong>
+                                <span>Historial resumido (hash corto + mensaje).</span>
+                            </div>
+                            <button class="copy-button" data-command="git log --oneline">Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3>🌿 Ramas & sincronización</h3>
+                        <div class="command-row">
+                            <div>
+                                <strong>git branch</strong>
+                                <span>Lista ramas locales.</span>
+                            </div>
+                            <button class="copy-button" data-command="git branch">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git switch -c nueva-rama</strong>
+                                <span>Crea y cambia a una rama nueva.</span>
+                            </div>
+                            <button class="copy-button" data-command="git switch -c nueva-rama">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git merge rama</strong>
+                                <span>Fusiona otra rama en la actual.</span>
+                            </div>
+                            <button class="copy-button" data-command="git merge rama">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git push -u origin rama</strong>
+                                <span>Publica la rama y guarda el remoto por defecto.</span>
+                            </div>
+                            <button class="copy-button" data-command="git push -u origin rama">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git pull --rebase</strong>
+                                <span>Descarga cambios remotos y reordena los locales.</span>
+                            </div>
+                            <button class="copy-button" data-command="git pull --rebase">Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3>🛟 Recuperación rápida</h3>
+                        <div class="command-row">
+                            <div>
+                                <strong>git restore archivo</strong>
+                                <span>Descarta cambios no indexados en un archivo.</span>
+                            </div>
+                            <button class="copy-button" data-command="git restore archivo">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git reset HEAD archivo</strong>
+                                <span>Saca un archivo del staging area.</span>
+                            </div>
+                            <button class="copy-button" data-command="git reset HEAD archivo">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git commit --amend</strong>
+                                <span>Edita el último commit (mensaje y contenido).</span>
+                            </div>
+                            <button class="copy-button" data-command="git commit --amend">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git revert &lt;hash&gt;</strong>
+                                <span>Crea un commit inverso para deshacer cambios.</span>
+                            </div>
+                            <button class="copy-button" data-command="git revert &lt;hash&gt;">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git stash push -m "WIP"</strong>
+                                <span>Guarda temporalmente el trabajo en progreso.</span>
+                            </div>
+                            <button class="copy-button" data-command="git stash push -m &quot;WIP&quot;">Copiar</button>
+                        </div>
+                    </div>
+
+                    <div class="cheatsheet-card">
+                        <h3>🛰️ Trabajo distribuido</h3>
+                        <div class="command-row">
+                            <div>
+                                <strong>git remote -v</strong>
+                                <span>Muestra los remotos configurados.</span>
+                            </div>
+                            <button class="copy-button" data-command="git remote -v">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git fetch --all --prune</strong>
+                                <span>Actualiza referencias remotas y limpia las obsoletas.</span>
+                            </div>
+                            <button class="copy-button" data-command="git fetch --all --prune">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git cherry-pick &lt;hash&gt;</strong>
+                                <span>Reaplica un commit específico en tu rama actual.</span>
+                            </div>
+                            <button class="copy-button" data-command="git cherry-pick &lt;hash&gt;">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git tag -a v1.0 -m "Release"</strong>
+                                <span>Crea una etiqueta anotada con mensaje.</span>
+                            </div>
+                            <button class="copy-button" data-command="git tag -a v1.0 -m &quot;Release&quot;">Copiar</button>
+                        </div>
+                        <div class="command-row">
+                            <div>
+                                <strong>git push --force-with-lease</strong>
+                                <span>Reescribe en remoto sin sobrescribir cambios ajenos.</span>
+                            </div>
+                            <button class="copy-button" data-command="git push --force-with-lease">Copiar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-section" style="margin-top:40px; background: transparent; box-shadow: none; border: none;">
+                    <h2 class="concept-title" style="margin-bottom: 20px;">
+                        <div class="concept-icon">🔤</div>
+                        Abreviaturas y flags populares
+                    </h2>
+                    <div class="flags-grid">
+                        <div class="flag-card">
+                            <code>-m / --message</code>
+                            <p>Define el mensaje del commit, tag o stash directamente en la línea de comandos.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>-a / --all</code>
+                            <p>Añade automáticamente archivos rastreados modificados al commit sin pasar por <code>git add</code>.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>-u / --set-upstream</code>
+                            <p>Establece la rama remota por defecto para sincronizar en futuros <code>git push</code>/<code>pull</code>.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>-b / --branch</code>
+                            <p>Crea una rama nueva al clonar o al hacer checkout/switch.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>-f / --force</code>
+                            <p>Fuerza la operación ignorando advertencias. Úsalo con precaución y, cuando sea posible, prefiere <code>--force-with-lease</code>.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>--amend</code>
+                            <p>Modifica el último commit en lugar de crear uno nuevo. Ideal para corregir mensajes o añadir cambios olvidados.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>--staged / --cached</code>
+                            <p>Limita la comparación o acción a lo que está en staging (por ejemplo en <code>git diff --staged</code>).</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>--hard / --soft / --mixed</code>
+                            <p>Modos de <code>git reset</code>: <strong>hard</strong> descarta todo, <strong>soft</strong> conserva staging y WD, <strong>mixed</strong> limpia staging pero deja los archivos.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>--graph</code>
+                            <p>Visualiza el historial como árbol en comandos como <code>git log --graph --oneline --decorate</code>.</p>
+                        </div>
+                        <div class="flag-card">
+                            <code>--depth</code>
+                            <p>Define la profundidad al clonar o fetch para obtener historial limitado (clones shallow).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-navigation">
                 <button class="level-navigation-button" data-next-level="faq">Subir de nivel</button>
             </div>
         </div>
@@ -2210,6 +2595,49 @@ git push -u origin nueva</pre></div>
 
                 activateTab(targetTab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        const copyButtons = document.querySelectorAll('.copy-button');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const command = button.getAttribute('data-command');
+                if (!command) return;
+
+                const originalText = button.textContent;
+                const showCopied = () => {
+                    button.classList.add('copied');
+                    button.textContent = '¡Copiado!';
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        button.textContent = originalText;
+                    }, 1500);
+                };
+
+                try {
+                    await navigator.clipboard.writeText(command);
+                    showCopied();
+                } catch (error) {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = command;
+                    textarea.setAttribute('readonly', '');
+                    textarea.style.position = 'fixed';
+                    textarea.style.left = '-9999px';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+
+                    try {
+                        document.execCommand('copy');
+                        showCopied();
+                    } catch (fallbackError) {
+                        button.textContent = 'Error';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                        }, 1500);
+                    }
+
+                    document.body.removeChild(textarea);
+                }
             });
         });
 
